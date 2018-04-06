@@ -9,6 +9,9 @@ class FlashcardForm extends React.Component{
     const { front, back, chapter } = this.state;
     let params = { front, back, chapter }
     axios.post('/api/cards', params)
+    .then( res => {
+      this.props.history.push('/')
+    })
   }
 
   handleChange = (e, {name, value}) => {
@@ -41,7 +44,7 @@ class FlashcardForm extends React.Component{
           onChange={this.handleChange}
         />
       </Form>
-      <Button onSubmit={this.postCard}>Submit</Button>
+      <Button onClick={this.postCard}>Submit</Button>
     </Container>
     )
   }
