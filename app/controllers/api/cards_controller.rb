@@ -1,5 +1,7 @@
 class Api::CardsController < ApplicationController
+
   def index
+    render json: Card.all
   end
 
   def create
@@ -8,6 +10,10 @@ class Api::CardsController < ApplicationController
       render json: card
     else render json: { errors: user.errors.full_messages.join(',')   }, status: 422
     end
+  end
+
+  def count
+    render json: Card.count
   end
 
   private
