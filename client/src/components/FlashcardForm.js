@@ -20,7 +20,7 @@ class FlashcardForm extends React.Component {
 
   render() {
     return(
-      <Container>
+      <Container style={style.pad}>
         <Form>
           <Form.Input
             name='front'
@@ -44,9 +44,19 @@ class FlashcardForm extends React.Component {
             onChange={this.handleChange}
           />
         </Form>
-        <Button onClick={this.postCard}>Submit</Button>
+        <Button onClick={this.postCard} style={style.button}>Submit</Button>
       </Container>
     )
+  }
+}
+
+const style = {
+  pad: {
+    paddingTop: '50px',
+    width: '50%',
+  },
+  button: {
+    marginTop: '15px',
   }
 }
 

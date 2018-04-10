@@ -9,51 +9,61 @@ class Home extends Component {
     axios.get('/api/cards')
     .then(res => { this.setState({ cards: res.data })
     })
+    setTimeout(() => {
+      this.newCard()
+    }, 100)
   }
 
   displayCard = () => {
     const { card } = this.state;
       return(
-        <Card.Content key={card.id}>
-          <Card.Description>
-            { this.state.flipped? card.front : card.back }
-          </Card.Description>
-        </Card.Content>
+        <Card key={card.id} style={style.card}>
+          <Card.Content>
+            <Card.Description style={style.font}>
+              { this.state.flipped? card.front : card.back }
+            </Card.Description>
+          </Card.Content>
+        </Card>
       )
-    }
+  }
 
   flipCard = () => {
     this.setState({ flipped: !this.state.flipped })
   }
 
   newCard = () => {
-    const num_list = [ 0, 1, 2, 3 ];
-    const num = num_list[Math.floor(Math.random()*num_list.length + 1)];
-    const { cards, card } = this.state;
-    this.setState({ card: cards[0] })
-    debugger
+    const { cards } = this.state;
+    const num = cards[Math.floor(Math.random()*cards.length)];
+    this.setState({ card: num, flipped: true })
   }
 
   render() {
     return (
-      <Container>
+      <Container style={style.pad}>
         <Grid>
           <Grid.Row centered>
-            <Card>
-              { this.displayCard() }
-            </Card>
+            { this.displayCard() }
           </Grid.Row>
           <Grid.Row centered>
-            <Grid.Column>
-              <Button onClick={ () => this.flipCard()}>Flip</Button>
-            </Grid.Column>
-            <Grid.Column>
-              <Button onClick={ () => this.newCard()}>New</Button>
-            </Grid.Column>
+            <Button onClick={ () => this.flipCard() }>Flip</Button>
+            <Button onClick={ () => this.newCard() }>Next</Button>
           </Grid.Row>
         </Grid>
       </Container>
     );
+  }
+}
+
+const style = {
+  pad: {
+    paddingTop: '50px',
+  },
+  card: {
+    padding: '50px',
+  },
+  font: {
+    fontSize: '40px',
+    textTransform: 'uppercase',
   }
 }
 
