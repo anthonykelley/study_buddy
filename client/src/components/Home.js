@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import { Container, Card, Button, Grid, } from 'semantic-ui-react';
+import { getCards } from '../actions/cards';
 
 class Home extends Component {
   state = { card: {}, flipped: true }
 
   componentDidMount() {
-    axios.get('/api/cards')
-    .then(res => { this.setState({ cards: res.data })
-    })
+    this.props.dispatch(getCards())
     setTimeout(() => {
       this.newCard()
     }, 100)
@@ -32,7 +32,7 @@ class Home extends Component {
   }
 
   newCard = () => {
-    const { cards } = this.state;
+    const { cards } = this.props;
     const num = cards[Math.floor(Math.random()*cards.length)];
     this.setState({ card: num, flipped: true })
   }
@@ -83,4 +83,8 @@ const style = {
   }
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+  return { cards: state.cards }
+}
+
+export default connect(mapStateToProps)(Home);
