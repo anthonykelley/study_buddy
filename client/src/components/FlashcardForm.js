@@ -1,19 +1,27 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { Form, Button, Container, } from 'semantic-ui-react'
-import { addCard, updateCard, showCard } from '../actions/cards';
+import { addCard, updateCard, getCards } from '../actions/cards';
 
 class FlashcardForm extends React.Component {
   state = { front: '', back: '', chapter: '' }
 
   componentDidMount() {
-    const { dispatch, match } = this.props;
-    dispatch(showCard(match.params.id))
-    setTimeout(() => {
-      const { card } = this.props;
-      this.setState({ front: card.front, back: card.back, chapter: card.chapter })
-    }, 100)
+    if (this.props.match.params.id) {
+      const { dispatch } = this.props;
+      dispatch(getCards())
+      setTimeout(() => {
+        const { card, match } = this.props;
+        this.setState({ card: card.find( c => c.id == match.params.id) })
+        this.setState({ front: this.state.card.front, back: this.state.card.back, chapter: this.state.card.chapter })
+      }, 100)
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params != prevProps.match.params) {
+      this.setState({ front: '', back: '', chapter: '' })
+    }
   }
 
   postCard = () => {

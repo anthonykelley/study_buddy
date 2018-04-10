@@ -14,13 +14,6 @@ export const addCard = (card) => {
   }
 }
 
-export const showCard = (id) => {
-  return (dispatch) => {
-    axios.get(`/api/cards/${id}`)
-    .then( res => dispatch({ type: 'CARDS', cards: res.data, headers: res.headers}) )
-  }
-}
-
 export const updateCard = (card) => {
   return (dispatch) => {
     axios.put(`/api/cards/${card.id}`, card)

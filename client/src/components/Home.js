@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Container, Card, Button, Grid, } from 'semantic-ui-react';
 import { getCards } from '../actions/cards';
@@ -24,7 +22,6 @@ class Home extends Component {
               { this.state.flipped? card.front : card.back }
             </Card.Description>
           </Card.Content>
-          <Link to={`/new_card/${card.id}/`}>Edit</Link>
         </Card>
       )
   }
