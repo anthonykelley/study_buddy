@@ -40,17 +40,30 @@ class Home extends Component {
   render() {
     return (
       <Container style={style.pad}>
+      {this.state.card?
         <Grid>
           <Grid.Row centered>
-            { this.displayCard() }
+            {  this.displayCard() }
           </Grid.Row>
           <Grid.Row centered>
             <Button onClick={ () => this.flipCard() }>Flip</Button>
             <Button onClick={ () => this.newCard() }>Next</Button>
           </Grid.Row>
         </Grid>
+        :
+        <Grid>
+          <Grid.Row centered>
+            <Card style={style.card}>
+              <Card.Content>
+                <Card.Description style={style.nocard}>
+                 Please Add A Card
+                </Card.Description>
+              </Card.Content>
+            </Card>
+          </Grid.Row>
+        </Grid>}
       </Container>
-    );
+    )
   }
 }
 
@@ -60,6 +73,9 @@ const style = {
   },
   card: {
     padding: '50px',
+  },
+  nocard: {
+    fontSize: '20px',
   },
   font: {
     fontSize: '40px',
