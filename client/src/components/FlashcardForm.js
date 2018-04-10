@@ -1,17 +1,19 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import { Form, Button, Container, } from 'semantic-ui-react'
+import { addCard } from '../actions/cards';
 
 class FlashcardForm extends React.Component {
   state = { front: '', back: '', chapter: '' }
 
   postCard = () => {
+    const { dispatch } = this.props;
     const { front, back, chapter } = this.state;
     let params = { front, back, chapter }
-    axios.post('/api/cards', params)
-    .then( res => {
-      this.props.history.push('/')
-    })
+    debugger
+    dispatch(addCard(params))
+    this.props.history.push('/')
   }
 
   handleChange = (e, {name, value}) => {
@@ -60,4 +62,4 @@ const style = {
   }
 }
 
-export default FlashcardForm;
+export default connect()(FlashcardForm);
