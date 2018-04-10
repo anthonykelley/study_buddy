@@ -23,6 +23,7 @@ class App extends Component {
             <AuthRoute exact path='/login' component={Login} />
             <AuthRoute exact path='/register' component={Register} />
             <ProtectedRoute exact path='/new_card' component={FlashcardForm} />
+            <ProtectedRoute exact path='/new_card/:id' component={FlashcardForm} />
             <Route component={NoMatch} />
           </Switch>
         </FetchUser>
