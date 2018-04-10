@@ -12,8 +12,8 @@ class FlashcardForm extends React.Component {
     dispatch(showCard(match.params.id))
     setTimeout(() => {
       const { card } = this.props;
-      this.setState({ front: card.front })
-    }, 10)
+      this.setState({ front: card.front, back: card.back, chapter: card.chapter })
+    }, 100)
   }
 
   postCard = () => {

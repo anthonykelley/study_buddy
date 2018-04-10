@@ -22,9 +22,9 @@ class Home extends Component {
           <Card.Content>
             <Card.Description style={style.font}>
               { this.state.flipped? card.front : card.back }
-              </Card.Description>
-              <Link to={`/new_card/${card.id}/`}>Edit</Link>
+            </Card.Description>
           </Card.Content>
+          <Link to={`/new_card/${card.id}/`}>Edit</Link>
         </Card>
       )
   }
