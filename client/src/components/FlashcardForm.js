@@ -24,7 +24,8 @@ class FlashcardForm extends React.Component {
     }
   }
 
-  postCard = () => {
+  postCard = (e) => {
+    e.preventDefault()
     const { dispatch, match } = this.props;
     const { front, back, chapter } = this.state;
     const func = match.params.id? updateCard : addCard;
@@ -41,7 +42,7 @@ class FlashcardForm extends React.Component {
   render() {
     return(
       <Container style={style.pad}>
-        <Form>
+        <Form onSubmit={this.postCard}>
           <Form.Input
             name='front'
             value={this.state.front}
@@ -63,8 +64,8 @@ class FlashcardForm extends React.Component {
             placeholder='Chapter'
             onChange={this.handleChange}
           />
+          <Button type='submit'>Submit</Button>
         </Form>
-        <Button onClick={this.postCard} style={style.button}>Submit</Button>
       </Container>
     )
   }
@@ -75,9 +76,6 @@ const style = {
     paddingTop: '50px',
     width: '50%',
   },
-  button: {
-    marginTop: '15px',
-  }
 }
 
 const mapStateToProps = (state) => {
