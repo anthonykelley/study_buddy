@@ -18,14 +18,14 @@ class FlashcardForm extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.match.params != prevProps.match.params) {
       this.setState({ front: '', back: '', chapter: '' })
     }
   }
 
   postCard = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const { dispatch, match } = this.props;
     const { front, back, chapter } = this.state;
     const func = match.params.id? updateCard : addCard;

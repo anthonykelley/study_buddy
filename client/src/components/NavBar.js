@@ -33,12 +33,15 @@ class NavBar extends Component {
   render() {
     return (
       <div>
-        <Menu pointing secondary>
+        <Menu pointing>
           <Link to='/'>
             <Menu.Item name='home' />
           </Link>
           <Link to='/new_card'>
             <Menu.Item name='new card' />
+          </Link>
+          <Link to='/card_list'>
+            <Menu.Item name='vocab list' />
           </Link>
           { this.rightNavs() }
         </Menu>

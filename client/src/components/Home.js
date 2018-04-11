@@ -18,7 +18,7 @@ class Home extends Component {
       return(
         <Card style={style.card}>
           <Card.Content>
-            <Card.Description style={style.font}>
+            <Card.Description style={style.font} textAlign='center'>
               { this.state.flipped? card.front : card.back }
             </Card.Description>
           </Card.Content>
@@ -71,7 +71,8 @@ const style = {
     paddingTop: '50px',
   },
   card: {
-    padding: '50px',
+    paddingTop: '50px',
+    paddingBottom: '50px',
   },
   nocard: {
     fontSize: '20px',
