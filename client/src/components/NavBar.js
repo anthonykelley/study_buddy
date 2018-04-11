@@ -30,10 +30,10 @@ class NavBar extends Component {
     );
   }
 
-  render() {
-    return (
-      <div>
-        <Menu pointing>
+  leftNavs = () => {
+    if (this.props.user.id) {
+      return(
+        <Menu.Menu position='left'>
           <Link to='/'>
             <Menu.Item name='home' />
           </Link>
@@ -43,6 +43,16 @@ class NavBar extends Component {
           <Link to='/card_list'>
             <Menu.Item name='vocab list' />
           </Link>
+        </Menu.Menu>
+      )
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <Menu pointing>
+          { this.leftNavs() }
           { this.rightNavs() }
         </Menu>
       </div>

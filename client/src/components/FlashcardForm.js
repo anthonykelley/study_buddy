@@ -7,21 +7,23 @@ class FlashcardForm extends React.Component {
   state = { front: '', back: '', chapter: '' }
 
   componentDidMount() {
-    if (this.props.match.params.id) {
       const { dispatch } = this.props;
       dispatch(getCards())
-      setTimeout(() => {
-        const { card, match } = this.props;
-        this.setState({ card: card.find( c => c.id == match.params.id) })
-        this.setState({ front: this.state.card.front, back: this.state.card.back, chapter: this.state.card.chapter })
-      }, 100)
-    }
+      // this.setState({ front: this.state.card.front, back: this.state.card.back, chapter: this.state.card.chapter })
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.props.match.params != prevProps.match.params) {
       this.setState({ front: '', back: '', chapter: '' })
     }
+  }
+
+  componentWillReceiveProps(prevProps) {
+    this.setState({ card: prevProps.card.find( c => c.id == prevProps.match.params.id) })
+  }
+
+  rand = () => {
+    this.setState({ front: this.state.card.front, back: this.state.card.back, chapter: this.state.card.chapter })
   }
 
   postCard = (e) => {
