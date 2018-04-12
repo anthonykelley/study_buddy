@@ -28,7 +28,7 @@ class CardList extends React.Component {
 
   render() {
     return(
-      <Container>
+      <Container style={styles.pad}>
         <Table celled>
           <Table.Header>
             <Table.Row>
@@ -44,6 +44,12 @@ class CardList extends React.Component {
         </Table>
       </Container>
     )
+  }
+}
+
+const styles = {
+  pad: {
+    paddingTop: '50px',
   }
 }
 
