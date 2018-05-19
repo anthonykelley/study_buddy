@@ -7,22 +7,22 @@ class FlashcardForm extends React.Component {
   state = { front: '', back: '', chapter: '', edit: true }
 
   componentDidMount() {
-    if(this.props.match.params.id) {
+    if (this.props.match.params.id) {
       const { dispatch } = this.props;
       dispatch(getCards())
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.edit === true) {
+    if (this.props.match.params.id && prevState.edit === true) {
       this.setState({ front: this.state.card.front, back: this.state.card.back, chapter: this.state.card.chapter, edit: false })
-    } else if (this.props.match.params != prevProps.match.params) {
+    }else if (this.props.match.params !== prevProps.match.params) {
       this.setState({ front: '', back: '', chapter: '' })
     }
   }
 
   componentWillReceiveProps(prevProps) {
-    if(this.props.match.params.id) {
+    if (this.props.match.params.id) {
       this.setState({ card: prevProps.card.find( c => c.id == prevProps.match.params.id) })
     }
   }

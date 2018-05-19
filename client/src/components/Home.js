@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Card, Button, Grid, } from 'semantic-ui-react';
+import { Container, Card, Button, Grid, Dropdown, } from 'semantic-ui-react';
 import { getCards } from '../actions/cards';
 
 class Home extends Component {
@@ -15,15 +15,15 @@ class Home extends Component {
 
   displayCard = () => {
     const { card } = this.state;
-      return(
-        <Card style={style.card}>
-          <Card.Content>
-            <Card.Description style={style.font} textAlign='center'>
-              { this.state.flipped? card.front : card.back }
-            </Card.Description>
-          </Card.Content>
-        </Card>
-      )
+    return(
+      <Card style={style.card}>
+        <Card.Content>
+          <Card.Description style={style.font} textAlign='center'>
+            { this.state.flipped? card.front : card.back }
+          </Card.Description>
+        </Card.Content>
+      </Card>
+    )
   }
 
   flipCard = () => {
@@ -39,8 +39,11 @@ class Home extends Component {
   render() {
     return (
       <Container style={style.pad}>
-      {this.state.card?
+        {this.state.card?
         <Grid>
+          <Grid.Row>
+            <Dropdown placeholder='Select Chapter' fluid selection />
+          </Grid.Row>
           <Grid.Row centered>
             {  this.displayCard() }
           </Grid.Row>
@@ -49,13 +52,13 @@ class Home extends Component {
             <Button onClick={ () => this.newCard() }>Next</Button>
           </Grid.Row>
         </Grid>
-        :
+            :
         <Grid>
           <Grid.Row centered>
             <Card style={style.card}>
               <Card.Content>
                 <Card.Description style={style.nocard}>
-                 Please Add A Card
+                  Please Add A Card
                 </Card.Description>
               </Card.Content>
             </Card>
