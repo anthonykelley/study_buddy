@@ -9,6 +9,10 @@ class Api::CardsController < ApplicationController
     render json: @card
   end
 
+  def chapters
+    render json: Card.chapters
+  end
+
   def create
     card = Card.new(card_params)
     if card.save

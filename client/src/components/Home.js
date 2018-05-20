@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Card, Button, Grid, Dropdown, } from 'semantic-ui-react';
+import { Container, Card, Button, Grid, Dropdown, Form, Select, } from 'semantic-ui-react';
 import { getCards } from '../actions/cards';
+import { getChapters } from '../actions/chapters';
 
 class Home extends Component {
-  state = { card: {}, flipped: true }
+  state = { card: {}, flipped: true, num: 0, filter: [], }
 
   componentDidMount() {
     this.props.dispatch(getCards())
+    this.props.dispatch(getChapters())
     setTimeout(() => {
       this.newCard()
-    }, 100)
+    }, 500)
   }
 
   displayCard = () => {
     const { card } = this.state;
     return(
-      <Card style={style.card}>
+      <Card style={style.card} onClick={ () => this.flipCard() }>
         <Card.Content>
           <Card.Description style={style.font} textAlign='center'>
             { this.state.flipped? card.front : card.back }
@@ -32,8 +34,25 @@ class Home extends Component {
 
   newCard = () => {
     const { cards } = this.props;
+    const { filter } = this.state;
     const num = cards[Math.floor(Math.random()*cards.length)];
-    this.setState({ card: num, flipped: true })
+    const numFilter = filter[Math.floor(Math.random()*filter.length)];
+    if ( this.state.num === 0 ) {
+      this.setState({ card: num, flipped: true })
+    }else {
+      this.setState({ card: numFilter, flipped: true })
+    }
+  }
+
+  filterChapter = () => {
+    this.setState({ filter: this.props.cards.filter( c => c.chapter == this.state.num ) })
+    setTimeout(() => {
+      this.newCard()
+    }, 200)
+  }
+
+  handleChange = (e, {name, value}) => {
+    this.setState({ [name]: value })
   }
 
   render() {
@@ -42,14 +61,23 @@ class Home extends Component {
         {this.state.card?
         <Grid>
           <Grid.Row>
-            <Dropdown placeholder='Select Chapter' fluid selection />
+            <Form.Input
+              fluid
+              name='num'
+              value={this.state.num}
+              onChange={this.handleChange}
+              options={this.props.chapters}
+              control={Select}
+              search
+              placeholder='Select Chapter...'
+              onClose={this.filterChapter}
+            />
           </Grid.Row>
           <Grid.Row centered>
             {  this.displayCard() }
           </Grid.Row>
           <Grid.Row centered>
-            <Button onClick={ () => this.flipCard() }>Flip</Button>
-            <Button onClick={ () => this.newCard() }>Next</Button>
+            <Button onClick={ () => this.newCard() }>Next Card</Button>
           </Grid.Row>
         </Grid>
             :
@@ -87,7 +115,7 @@ const style = {
 }
 
 const mapStateToProps = (state) => {
-  return { cards: state.cards }
+  return { cards: state.cards, chapters: state.chapters }
 }
 
 export default connect(mapStateToProps)(Home);
