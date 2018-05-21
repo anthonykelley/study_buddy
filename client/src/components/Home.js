@@ -12,7 +12,7 @@ class Home extends Component {
     this.props.dispatch(getChapters())
     setTimeout(() => {
       this.newCard()
-    }, 500)
+    }, 200)
   }
 
   displayCard = () => {
@@ -21,7 +21,7 @@ class Home extends Component {
       <Card style={style.card} onClick={ () => this.flipCard() }>
         <Card.Content>
           <Card.Description style={style.font} textAlign='center'>
-            { this.state.flipped? card.front : card.back }
+            { this.state.card.front ? ( this.state.flipped? card.front : card.back ) : 'Please Add A Card' }
           </Card.Description>
         </Card.Content>
       </Card>
@@ -51,6 +51,10 @@ class Home extends Component {
     }, 200)
   }
 
+  clearFilter = () => {
+    this.setState({ num: 0 })
+  }
+
   handleChange = (e, {name, value}) => {
     this.setState({ [name]: value })
   }
@@ -58,40 +62,25 @@ class Home extends Component {
   render() {
     return (
       <Container style={style.pad}>
-        {this.state.card?
-        <Grid>
-          <Grid.Row>
-            <Form.Input
-              fluid
-              name='num'
-              value={this.state.num}
-              onChange={this.handleChange}
-              options={this.props.chapters}
-              control={Select}
-              search
-              placeholder='Select Chapter...'
-              onClose={this.filterChapter}
-            />
-          </Grid.Row>
-          <Grid.Row centered>
-            {  this.displayCard() }
-          </Grid.Row>
-          <Grid.Row centered>
-            <Button onClick={ () => this.newCard() }>Next Card</Button>
-          </Grid.Row>
-        </Grid>
-            :
-        <Grid>
-          <Grid.Row centered>
-            <Card style={style.card}>
-              <Card.Content>
-                <Card.Description style={style.nocard}>
-                  Please Add A Card
-                </Card.Description>
-              </Card.Content>
-            </Card>
-          </Grid.Row>
-        </Grid>}
+        <div style={style.test}>
+          <Form.Input
+            name='num'
+            value={this.state.num}
+            onChange={this.handleChange}
+            options={this.props.chapters}
+            control={Select}
+            search
+            placeholder='Select Chapter...'
+            onClose={this.filterChapter}
+          />
+          <Button onClick={ () => this.clearFilter() }>Clear Filter</Button>
+        </div>
+        <div>
+          {  this.displayCard() }
+        </div>
+        <div>
+          <Button onClick={ () => this.newCard() }>Next Card</Button>
+        </div>
       </Container>
     )
   }
@@ -99,14 +88,19 @@ class Home extends Component {
 
 const style = {
   pad: {
+    display: 'grid',
+    gridTemplateRows: 'repeat(auto-fill, 100px)',
     paddingTop: '50px',
+    gridGap: '20px',
+    justifyItems: 'center',
+  },
+  test: {
+    display: 'grid',
   },
   card: {
+    justifyItems: 'center',
     paddingTop: '50px',
     paddingBottom: '50px',
-  },
-  nocard: {
-    fontSize: '20px',
   },
   font: {
     fontSize: '40px',
